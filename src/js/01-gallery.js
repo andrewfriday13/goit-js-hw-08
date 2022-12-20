@@ -1,59 +1,27 @@
-// Add imports above this line
-import { galleryItems } from './gallery-items';
-// Change code below this line
-
-console.log(galleryItems);
-
-
+import { galleryItems } from './gallery-items.js';
+// // // Change code below this line
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+console.log(SimpleLightbox)
 
 const gallery = document.querySelector(".gallery")
-gallery.addEventListener("click", imagesGallry)
 
-function imagesGallry(evnt) {
-
-  evnt.preventDefault()
-  const evntValue = evnt.target.nodeName
-  
-  if (evntValue !== "IMG") {
-    return console.log("не картинка")
-  }
-
-  const fullSizeImg = evnt.target.getAttribute("data-source")
-    const instance = basicLightbox.create(`
-    <img
-      src="${fullSizeImg}"
-    />
-`,
-     {
-	
-	onShow: (instance) => {document.addEventListener("keydown",clickOnEsc )},
-	onClose: (instance) => {document.removeEventListener("keydown",clickOnEsc)}
-})
-  instance.show();
-  console.log(evnt)
-  
-  function clickOnEsc() {
-    if (evnt.key !== "Escape") {
-      return
-    }
-  instance.close()
-
-  }
-
-}
-
-
-const allImg = galleryItems.map(({ preview, original, description }) => 
-  `<div class="gallery__item">
-  <a class="gallery__link" href="large-image.jpg">
-    <img
-      class="gallery__image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</div>`
+const galleryImg = galleryItems.map(({ preview, original, description }) =>
+  `<li>
+    <a class="gallery__item" href="${original}">
+  <img
+  class="gallery__image"
+  src="${preview}"
+   alt="${description}" />
+</a>
+</li>`
 ).join("")
 
-gallery.innerHTML = allImg
+gallery.innerHTML = galleryImg
+
+const options = {
+    captionsData: 'alt',
+    captionDelay: 250,
+};
+
+new SimpleLightbox('.gallery a', options);
