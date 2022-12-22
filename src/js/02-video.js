@@ -1,16 +1,12 @@
 import Player from '@vimeo/player';
 
-const player = new Player('handstick', {
+const players = new Player('handstick', {
     id: 19231868,
     width: 640
 });
 
-player.on('play', function() {
-    console.log('played the video!');
+players.on('play', function(currentTime) {
+    const seconds = currentTime.seconds
+localStorage.setItem("videoplayer-current-time", JSON.stringify(seconds))
 });
 
-const onPlay = function(data) {
-    // data is an object containing properties specific to that event
-};
-
-player.on('play', onPlay);
