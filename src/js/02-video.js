@@ -1,14 +1,8 @@
 import throttle from 'lodash.throttle'; 
-import Player from '@vimeo/player';
 
-const vimeo = document.getElementById("vimeo-player")
+const iframe = document.querySelector('iframe');
 
-const players = new Player('handstick', {
-    id: 19231868,
-    width: 640
-});
+const players = new Vimeo.Player(iframe);
+console.log(players)
 
-players.on('timeupdate', throttle(({ seconds }) =>
-    localStorage.setItem('videoplayer-current-time', seconds)), 500);
-
-console.log("привіт")
+players.on('timeupdate', throttle(({ seconds }) => localStorage.setItem('videoplayer-current-time', seconds)), 500);
