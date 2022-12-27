@@ -6,10 +6,12 @@ const input = document.querySelector("input")
 const TEXTEAREA_KEY = "feedback-form-state"
 
 feedBackForm.addEventListener('submit', submitForm)
-textarea.addEventListener('input', throttle(textareaForm, 500))
-input.addEventListener('input', throttle(textareaForm, 500))
+feedBackForm.addEventListener('input', throttle(textareaForm, 500))
 
-let allData = {}
+let allData = {
+  email: '',
+  message: '',
+}
 
 feedBackForm.addEventListener('input', evnt => {
   allData[evnt.target.name] = evnt.target.value
@@ -34,14 +36,12 @@ function submitForm(evnt) {
       email,
       message,
     }
-
-
     console.log(resultData)
   }
   evnt.target.reset()
 
    localStorage.removeItem(TEXTEAREA_KEY)
- allData = {}
+  allData = {}
 }
 
 function textareaForm() {
@@ -51,20 +51,14 @@ function textareaForm() {
 
 function saveData() {
 
-  try {
     const saveStorage = localStorage.getItem(TEXTEAREA_KEY)
-
     const translate = JSON.parse(saveStorage)
 
     if (translate) {
       textarea.value = translate.message
       input.value = translate.email
     }
-  }
-  catch (error) {
-    console.log(error)
-  }
-    
+
 }  
 saveData()
 
