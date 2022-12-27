@@ -12,14 +12,11 @@ input.addEventListener('input', throttle(textareaForm, 500))
 let allData = {}
 
 feedBackForm.addEventListener('input', evnt => {
-
   allData[evnt.target.name] = evnt.target.value
 }
 )
 
-
 function submitForm(evnt) { 
-
   const emailEl = evnt.target.email.value.length
   const messageEl = evnt.target.message.value.length
   evnt.preventDefault()
@@ -42,26 +39,32 @@ function submitForm(evnt) {
     console.log(resultData)
   }
   evnt.target.reset()
-  localStorage.removeItem(TEXTEAREA_KEY)
+
+   localStorage.removeItem(TEXTEAREA_KEY)
  allData = {}
 }
 
 function textareaForm() {
-
-  const feedBackMessage = JSON.stringify(allData)
+ const feedBackMessage = JSON.stringify(allData)
  localStorage.setItem(TEXTEAREA_KEY, feedBackMessage)
 }
 
 function saveData() {
-  const saveStorage = localStorage.getItem(TEXTEAREA_KEY)
 
-  const translate = JSON.parse(saveStorage)    
+  try {
+    const saveStorage = localStorage.getItem(TEXTEAREA_KEY)
 
-  if (translate) {
-    textarea.value = translate.message
-    input.value = translate.email
+    const translate = JSON.parse(saveStorage)
+
+    if (translate) {
+      textarea.value = translate.message
+      input.value = translate.email
+    }
   }
-} 
-
+  catch (error) {
+    console.log(error)
+  }
+    
+}  
 saveData()
 
