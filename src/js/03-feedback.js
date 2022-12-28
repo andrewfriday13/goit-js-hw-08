@@ -54,9 +54,10 @@ function saveData() {
     const saveStorage = localStorage.getItem(TEXTEAREA_KEY)
     const translate = JSON.parse(saveStorage)
 
-    if (translate) {
-      textarea.value = translate.message
-      input.value = translate.email
+  if (translate) {
+      allData = translate
+      textarea.value = translate.message || "";
+      input.value = translate.email || "";
     }
 
 }  
